@@ -51,6 +51,7 @@ html
         img.src = '../images/thumbsup.png';
         //Newly added function
         function sendmess(messType){
+            console.log(username);
             details.username=username;
             details.messageType=messType;
             console.log("type of message",details);
@@ -60,7 +61,7 @@ html
         }
         socket.on('chat message', function (msg, details) {
             console.log("check details",details);
-            username=details.username;
+            user=details.username;
             messType=details.messageType;
             var nickname = username.substring(0, 2);
             var message;
@@ -70,11 +71,11 @@ html
                     return;
                 }
             message=$("<li class='left clearfix'>"+"<span class='chat-img pull-left'>"+"<img src='http://placehold.it/50/55C1E7/fff&text="+nickname+"' alt='User Avatar' class='img-circle'/>"+
-                "</span>"+"<div class='chat-body clearfix'><div class='header'><strong class='primary-font'>"+username+"</strong></div><p>"+msg+"</p></div></li>");
+                "</span>"+"<div class='chat-body clearfix'><div class='header'><strong class='primary-font'>"+user+"</strong></div><p>"+msg+"</p></div></li>");
             }
             else{
             message=$("<li class='left clearfix'>"+"<span class='chat-img pull-left'>"+"<img src='http://placehold.it/50/55C1E7/fff&text="+nickname+"' alt='User Avatar' class='img-circle'/>"+
-            "</span>"+"<div class='chat-body clearfix'><div class='header'><strong class='primary-font'>"+username+"</strong></div><p><i class='glyphicon glyphicon-thumbs-up'></i></p></div></li>");
+            "</span>"+"<div class='chat-body clearfix'><div class='header'><strong class='primary-font'>"+user+"</strong></div><p><i class='glyphicon glyphicon-thumbs-up'></i></p></div></li>");
 
             }
             $('.chat').append(message);
