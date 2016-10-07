@@ -1,0 +1,82 @@
+doctype html
+html
+    head
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/chat.css')
+    body
+        .container
+            .row
+                .col-md-4
+                .col-md-5
+                    .panel.panel-primary
+                        .panel-heading.panelHeading
+                            span.glyphicon.glyphicon-comment
+                            |  Teen Connect
+                            .btn-group.pull-right
+                                button.btn.btn-default.btn-xs.dropdown-toggle(type='button', data-toggle='dropdown')
+                                    span.glyphicon.glyphicon-chevron-down
+                                ul.dropdown-menu.slidedown
+                                    li
+                                        a(href='/users', target='_blank')
+                                            span.glyphicon.glyphicon-user
+                                            |                                 Users Online
+                                    li.divider
+                                    li
+                                        a(href="/logout/#{username}'")
+                                            span.glyphicon.glyphicon-off
+                                            |                                 Leave chat
+                        .panel-body
+                            ul.chat
+                        .panel-footer
+                          form(action='',method="POST")
+                            .input-group
+                                input#btn-input.form-control.input-sm(type='text', placeholder='Type your message here...')
+                                span.input-group-btn
+                                    button#btn-chat.btn.btn-warning.btn-sm(type="submit" onclick='return sendmess("text");')
+                                        | Send
+                                .btn-footer
+                                    button.btn-default.btn-sm(onclick='return sendmess("img");')
+                                       i.glyphicon.glyphicon-thumbs-up
+    script(src='/javascripts/socket.io.js')
+    script(src='/javascripts/jquery.js')
+    script(src='/javascripts/bootstrap.min.js')
+    script.
+        var username = !{JSON.stringify(username)};
+        var details={};
+        var socket = io.connect(window.location.href);
+        console.log(window.location.href);
+        var result = false;
+        var img = document.createElement("img");
+        var messname = true;
+        img.src = '../images/thumbsup.png';
+        //Newly added function
+        function sendmess(messType){
+            details.username=username;
+            details.messageType=messType;
+            console.log("type of message",details);
+            socket.emit('chat message', $('#btn-input').val(), details);
+            $('#btn-input').val('');
+            return false;
+        }
+        socket.on('chat message', function (msg, details) {
+            console.log("check details",details);
+            username=details.username;
+            messType=details.messageType;
+            var nickname = username.substring(0, 2);
+            var message;
+            console.log("check the messType",messType);
+            if(messType==="text"){
+                if(msg===""){
+                    return;
+                }
+            message=$("<li class='left clearfix'>"+"<span class='chat-img pull-left'>"+"<img src='http://placehold.it/50/55C1E7/fff&text="+nickname+"' alt='User Avatar' class='img-circle'/>"+
+                "</span>"+"<div class='chat-body clearfix'><div class='header'><strong class='primary-font'>"+username+"</strong></div><p>"+msg+"</p></div></li>");
+            }
+            else{
+            message=$("<li class='left clearfix'>"+"<span class='chat-img pull-left'>"+"<img src='http://placehold.it/50/55C1E7/fff&text="+nickname+"' alt='User Avatar' class='img-circle'/>"+
+            "</span>"+"<div class='chat-body clearfix'><div class='header'><strong class='primary-font'>"+username+"</strong></div><p><i class='glyphicon glyphicon-thumbs-up'></i></p></div></li>");
+
+            }
+            $('.chat').append(message);
+            $('.panel-body').scrollTop(9999);
+        });
