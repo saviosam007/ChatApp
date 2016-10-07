@@ -1,5 +1,10 @@
-link(rel='stylesheet', href='/stylesheets/login.css')
-link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+doctype html
+html
+    head
+        title IIT Connect
+        link(rel='stylesheet', href='/stylesheets/login.css')
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    body
 nav.navbar.navbar-default.navColor
     .container-fluid
         .navbar-header
@@ -12,7 +17,7 @@ nav.navbar.navbar-default.navColor
                 | click here
                 i.glyphicon.glyphicon-comment
     script.
-        var launchHome = function(){
-        window.location.assign(window.location.origin);
+        var launchHome = function () {
+            window.location.assign(window.location.origin);
         }
 
