@@ -1,0 +1,62 @@
+doctype html
+html
+    head
+        title TEEN CONNECT CHAT
+        link(href='/stylesheets/savio1.css', rel='stylesheet', type='text/css')
+    body
+        #container
+            #main
+                ul#messages
+    form(class="fixedForm" action='',method="POST")
+        input#m(autocomplete='off')
+        button Send
+        input#thumbs(type="submit", value="", onclick="return test();")
+        input#buttonstyle(type="button", value="leave chat" name="#{username}" onclick="location.href='/logout/#{username}'")
+        input#use(type="hidden", value="#{username}")
+        a(href='/users', target='_blank')
+            h4#col users chat list
+        a
+    script(src='https://cdn.socket.io/socket.io-1.2.0.js')
+    script(src='http://code.jquery.com/jquery-1.11.1.js')
+    script.
+        var username = !{JSON.stringify(username)};
+        var socket = io.connect('http://localhost:3001');
+        var result = false;
+        var img = document.createElement("img");
+        //var userdb=
+        !{JSON.stringify(db)};
+        var messname = true;
+        //console.log(userdb);
+        img.src = '../images/thumbsup.png';
+        $('form').submit(function () {
+            socket.emit('chat message', $('#m').val(), username);
+            $('#m').val('');
+            return false;
+        });
+
+        function test() {
+            messname = true;
+            socket.emit('img message', $('#m').val(), username);
+            $('#m').val('');
+            return false;
+        };
+        function sav() {
+
+        }
+        socket.on('chat message', function (msg, username) {
+            var a = $("<li>" + "<h3 style='color: #880000'>" + username + "</h3>" + "" + msg + "</li>");
+            $('#messages').append(a);
+            $('#main').scrollTop(9999);
+        });
+        socket.on('img message', function (msg, username) {
+            if (messname === true) {
+                console.log("reached");
+                var a = $("<li>" + "<h3 style='color: #880000'>" + username + "</h3></li>");
+                $('#messages').append(a);
+                $('#messages').append($('<img src="../images/thumbsup.png"/>'));
+                $('#main').scrollTop(9999);
+            }
+        });
+        function a() {
+            console.log("hardluck");
+        }
