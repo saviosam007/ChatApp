@@ -17,7 +17,7 @@ var logout= require('./routes/logout');
 // view engine setup
 app.set('views', path.join(__dirname,'/views'));
 app.set('view engine', 'jade');
-
+app.set('port', (process.env.PORT || 3001));
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
@@ -96,7 +96,7 @@ io.on('connection', function(socket){
   });
 
 });
-http.listen(3001, function(){
+http.listen(app.get('port'), function(){
   console.log('listening on *:3001');
 });
 module.exports = app;
