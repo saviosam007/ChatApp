@@ -1,0 +1,30 @@
+doctype html
+html
+    head
+        title Socket.IO chat
+        link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet', href='/stylesheets/userlist.css')
+      body
+nav.navbar.navbar-default.navColor
+    .container-fluid
+        .navbar-header
+            a.navbar-brand.navFont(href="") TEEN CONNECT
+.container
+    .row
+        table.table.table-fixed.tablestyle
+            thead
+                tr
+                    th.col-xs-4 #
+                    th.col-xs-8 Name
+            tbody#userlist
+script(src='/javascripts/socket.io.js')
+script(src='/javascripts/jquery.js')
+script(src='/javascripts/bootstrap.min.js')
+script.
+    var username = !{JSON.stringify(username)};
+    console.log(username.length);
+    for (var i = 0; i < username.length; i++) {
+        var count = i + 1;
+        var a = $("<tr><td class='col-xs-4'>" + count + "</td><td class='col-xs-8'>" + username[i].userlist + "</td></tr>")
+        $('#userlist').append(a);
+    }
