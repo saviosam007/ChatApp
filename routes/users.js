@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   userdb.find({}, function (err, docs) {
   var user=docs;
     console.log(user[0]);
-  res.render('users', { username: user});
+  res.render('userlist', { username: user});
   });
 });
 

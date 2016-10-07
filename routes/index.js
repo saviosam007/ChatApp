@@ -35,7 +35,7 @@ userdb.insert({userlist:user},function(err,newuserindb)
   };
 
 
-res.render('chat', {username: user});
+res.render('chat_new', {username: user});
   return false;
 });
 /*io.on('connection', function(socket){
