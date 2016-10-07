@@ -51,10 +51,11 @@ app.get('/close/:id', function(req, res) {
   userdb.remove({userlist:req.params.id},function(err,newuserindb)
   {
     console.log("deleted:"+req.params.id);
-  })
+  });
   //res.render('success', { title: 'Express' });
   window.close();
 });
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
